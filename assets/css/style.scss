@@ -282,3 +282,32 @@ h1:hover .octicon, h2:hover .octicon, h3:hover .octicon, h4:hover .octicon, h5:h
   padding: 20px;
   text-align: center;
 }
+#event_anchors_section {
+  min-height: 60px;
+}
+#event_anchor_links ul {
+  // position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 10px;
+  list-style: none;
+  justify-content:center;
+}
+// #event_anchor_links li {
+//   display:none;
+// }
+// #event_anchor_links:hover li {
+//   display: block;
+//   background-color: #eee;
+// }
+
+#dl-cal {
+  text-align: center;
+  background-color: #366;
+  color:#fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 30px auto;
+  display: block;
+}

@@ -45,6 +45,7 @@ custom_js:
   {%- include custom/calendar.html -%}
 <div>
 {% assign events = site.data.orgs[page.org].events %}
+<a href="#dl-cal" onclick="downloadCalender()" id="dl-cal">Download Shortlisted Events Calendar</a></br>
 {% include events/event_list_anchors.html events=events %}
 {% include events/event_list.html events=events %}
 </div>
