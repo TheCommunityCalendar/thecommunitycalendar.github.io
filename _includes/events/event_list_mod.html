@@ -1,0 +1,68 @@
+{% if cnt %}
+{% assign cnt = cnt | plus: 1 %}
+{% else %}
+{% assign cnt = count %}
+{% endif %}
+{% assign group_dates_startend = "" | split: "," %}
+{% assign tbl_id = slugged | append: "_" | append: cnt | append: "_" | append: iter %}
+{% if is_group == 1 %}
+<table id="tbl_{{tbl_id}}" class="{{slugged}} event-sitting">
+  {% assign group_dates = "" | split: ',' %}
+{% endif %}
+{% for date in content %}
+{% assign iter = iter | plus: 1 %}
+{% assign tbl_id = slugged | append: "_" | append: cnt | append: "_" | append: iter %}
+{% if is_group == 0 %}
+<table id="tbl_{{tbl_id}}" class="{{slugged}} event-sitting">
+  
+  {% assign group_dates = "" | split: ',' %}
+{% endif %}
+    {% assign slugtime = date.time.start | date: "T%H--%M" %}
+    {% if date.time.end == false %}
+      {% assign slugendtime = date.time.start | date: "T%H--%M" %}
+    {% else %}
+      {% assign slugendtime = date.time.end | date: "T%H--%M" %}
+    {% endif %}
+    {% assign slugdate = date.date | date: "%Y-%m-%d" | append: slugtime %}
+    {% assign slugenddate = date.date | date: "%Y-%m-%d" | append: slugendtime %}
+    {% assign startend = "[&#34;" | append: slugdate | append: "&#34;,&#34;" | append: slugenddate | append: "&#34;]" %}
+    {% assign group_dates = group_dates | push: slugdate %}
+    {% assign group_dates_startend = group_dates_startend | push: startend %}
+    {% assign loc = date.location %}
+    {% assign x = site.data.orgs[page.org].meta.locations[loc] %}
+    {% assign slugged_module = "mod_" | append: slugged %}
+    
+        <tr>
+            <td style="text-align: center;">
+                {{ date.date | date: "%A, %b %-d, %Y"}}<br>
+                {{ date.time.start | date: "%H:%M" }}
+                {% if date.time.end %}
+                    {% if date.time.end != "" %}
+                        - {{ date.time.end | date: "%H:%M" }}
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td  style="text-align: center;">
+                <a href="{{x.url}}">{{ x.title }} <i class="fa-regular {{ x.icon }}"></i></a>
+            </td>
+        </tr>
+        
+{% if is_group == 0 %}
+<tr>
+  <td colspan="2" id="td_{{ slugged_module }}">
+      <input type="checkbox" data-dates="[{{group_dates_startend | join: ','}}]" data-title="{{ title }}" data-slug="{{slugged}}" data-tbl-id="" name="cb_{{ slugged_module }}_{{group_dates}}" id="cb_{{ slugged_module }}_{{group_dates}}" onclick="toggleEnrolmentPreference(this.id, 'tbl_{{tbl_id}}')">
+      <label for="cb_{{ slugged_module }}_{{group_dates}}">Shortlist this sitting of this module.</label>
+  </td>
+</tr>
+</table>
+{% endif %}
+{% endfor %}
+{% if is_group == 1 %}
+<tr>
+  <td colspan="2" id="td_{{ slugged_module }}">
+      <input type="checkbox" data-dates="[{{group_dates_startend | join: ','}}]" data-title="{{ title }}" data-slug="{{slugged}}" name="cb_{{ slugged_module }}_{{group_dates | join: '_'}}" id="cb_{{ slugged_module }}_{{group_dates | join: '_'}}" onclick="toggleEnrolmentPreference(this.id, 'tbl_{{tbl_id}}')">
+      <label for="cb_{{ slugged_module }}_{{group_dates | join: '_'}}">Shortlist this sitting of this module.</label>
+  </td>
+</tr>
+</table>
+{% endif %}

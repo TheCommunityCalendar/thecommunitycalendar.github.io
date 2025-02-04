@@ -1,0 +1,57 @@
+<a href="#" onclick="downloadCalender()">Download Calendar</a></br>
+{% assign count = 0 %}
+{%- assign json_events = "[" -%}
+{% for item_hash in events %}
+  {% assign item = item_hash[1] %}
+  {%- assign json_event = item | jsonify -%}
+  {%- assign json_events = json_events | append: json_event -%}
+  {% if forloop.last == false %}
+    {%- assign json_events = json_events | append: "," -%}
+  {% endif %}
+  {% assign slugged = item.title | slugify | replace: 'é', 'e' %}
+<table id="{{'anc_' | append: slugged }}" class="{{slugged}} event">
+  <thead>
+    <tr>
+    <th colspan="2">
+    {{item.title}}
+    {% assign tbod_id = 'tbody_' | append: slugged %}
+    <span class="pointer" onclick="toggleTable('{{ tbod_id }}', this)">
+        [Show]
+    </span>
+    </th>
+    </tr>
+  </thead>
+  <tbody style="display: none;" id="{{ 'tbody_' | append: slugged }}">
+    <tr>
+    <td style="vertical-align: top; text-align: justify;">
+      <p style="white-space: pre-line">{{item.synopsis}}</p>
+    </td>
+    <td style="vertical-align: top; text-align: center;">
+    {% assign title = item.title | slugify | replace: "é", "e" %}
+    {% assign iter = 0 %}
+    {% if item.dates.first.date %}
+        {% assign count = count | plus: 1 %}
+        {% assign content = item.dates %}
+        {% assign is_group=0 %}
+        {% include events/event_list_mod.html content=content is_group=is_group slugged=slugged count=count %}
+    {% else %}
+        {% for date_group_hash in item.dates %}
+            {% assign count = count | plus: 1 %}
+            {% assign content = date_group_hash %}
+            {% assign is_group=1 %}
+
+            {% include events/event_list_mod.html content=date_group_hash is_group=is_group slugged=slugged count=count %}
+        {% endfor %}
+    {% endif %} 
+
+    </td>
+    </tr>
+  </tbody>
+</table>
+{% endfor %}
+
+{%- assign json_events = json_events | append: "]" -%}
+
+<script>
+const event_data = {{ json_events }};
+</script>

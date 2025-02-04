@@ -1,0 +1,107 @@
+title: The Community Calendar
+email: communitycalendar.ni@gmail.com
+accent_colour: "#336699"
+colors:
+  base: "#000"
+  accent: "ff0"
+description: >- # this means to ignore newlines until "baseurl:"
+  The Community Calendar - NI. What's on in NI? When? Where?
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://thecommunitycalendar.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+github_username:  TheCommunityCalendar
+
+
+# collections_dir: _orgs
+collections:
+  orgs:
+    output: true
+    permalink: /orgs
+  # organisations:
+  #   output: true
+  #   permalink: /organisations/:slug
+  brc:
+    output: true
+    permalink: /orgs/:collection/:title
+  # int:
+  #   output: true
+  #   permalink: /organisations/:collection/:title
+
+# Build settings
+theme: minima
+
+
+# theme_version: 1.4.2
+
+# Optional native feature customisation (delete to turn off)
+table_of_contents_header: "Jump to:"
+table_of_contents_collapsible: true
+# post_end_promo: <i><b>Enjoyed this article? You'll like "<a href="https://jakeweeklee.substack.com">Jake Week Lee</a>", a newsletter of articles & online things!</b></i>
+# google_analytics: G-HRJSZQJJ2G
+replace_read_time_with_word_count: true
+show_excerpts: true
+open_external_links_in_new_tab: true
+
+# Setting article defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      type: "brc"
+    values:
+      layout: "org"
+      author:
+        name: "Belfast Recovery College"
+        url: "https://bhsct.com"
+author:
+  name: The Community Calendar
+  url: https://thecommunitycalendar.github.io
+
+# Social / dark mode settings
+minima:
+  skin: auto
+  social_links:
+    - { platform: github, user_url: "https://github.com/TheCommunityCalendar" }
+    - {
+        platform: email,
+        user_url: "mailto:communitycalendar.ni@gmail.com",
+        user_title: "communitycalendar.ni@gmail.com",
+      }
+    - { platform: rss, user_url: "/feed.xml", user_title: "RSS Feed" }
+
+###
+# Below here probably doesn't need changing #
+###
+
+# Site settings
+permalink: /:title/
+timezone: Europe/London
+
+# Build settings
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-webp
+
+# Pagination settings
+paginate: 10
+paginate_path: page/:num/
+
+# Syntax highlighter settings
+# kramdown:
+#   syntax_highlighter_opts:
+#     default_lang: kotlin
+#     guess_lang: true
+
+# Webp conversion settings
+webp: 
+  enabled: true
+  quality: 95
+  img_dir: ["/images/banners"]
+  nested: true
+  regenerate: false # Set to true if settings have been changed
+  formats: [".jpeg", ".jpg", ".png"]
