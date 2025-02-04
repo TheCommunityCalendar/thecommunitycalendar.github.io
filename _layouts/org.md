@@ -5,7 +5,9 @@ custom_css:
 custom_js:
   - calendar
 ---
-
+<div class="disclaimer">
+<strong>This page is not endorsed, nor affilliated with <em>{{ site.data.orgs[page.org].meta.title | escape }}</em>.</br>Please refer to their resources in case of uncertainty.</br>This site is merely a side-project.</strong>
+</div>
 <article class="post">
 
   <header class="post-header">
@@ -18,7 +20,7 @@ custom_js:
   <div class="blurb">
     {{ site.data.orgs[page.org].meta.content.blurb  | mardownify  | newline_to_br }}
   </div>
-  
+
   <div class="address">
     {{ site.data.orgs[page.org].meta.contact.address | escape | mardownify  | newline_to_br  }}
     <a href="{{ site.data.orgs[page.org].meta.locations.college.url | escape }}">View on a Map</a>
