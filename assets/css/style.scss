@@ -311,3 +311,17 @@ h1:hover .octicon, h2:hover .octicon, h3:hover .octicon, h4:hover .octicon, h5:h
   margin: 30px auto;
   display: block;
 }
+
+@media only screen and (max-width: 40em) {
+  // thead th:not(:first-child) {
+  //     display: none;
+  // }
+
+  .event td, .event th {
+      display: block;
+  }
+
+  // td[data-th]:before  {
+  //     content: attr(data-th);
+  // }
+}
