@@ -27,17 +27,17 @@ custom_js:
     <a href="{{ site.data.orgs[page.org].meta.locations.college.url | escape }}">View on a Map</a>
   </div>
   <div class="tel">
-    <a href="tel:{{ site.data.orgs[page.org].meta.contact.telephone | escape }}">Telephone {{ site.data.orgs[page.org].meta.title | escape }}</a>
+    <a href="tel:{{ site.data.orgs[page.org].meta.contact.telephone | escape }}">Telephone: {{ site.data.orgs[page.org].meta.contact.telephone | escape }}</a>
   </div>
   <div class="email">
-    <a href="mailto:{{ site.data.orgs[page.org].meta.contact.email | escape }}">Email {{ site.data.orgs[page.org].meta.title | escape }}</a>
+    <a href="mailto:{{ site.data.orgs[page.org].meta.contact.email | escape }}">Email: {{ site.data.orgs[page.org].meta.contact.email | escape }}</a>
   </div>
 
   <div class="www">
     <a href="{{ site.data.orgs[page.org].meta.links.www | escape }}">{{ site.data.orgs[page.org].meta.title | escape }} Homepage</a>
   </div>
   <div class="enrol">
-    <a href="{{ site.data.orgs[page.org].meta.links.enrol | escape }}">Enrolment form</a>
+    <a href="{{ site.data.orgs[page.org].meta.links.enrol | escape }}">Enrol Here!</a>
   </div>
 </div>
 </article>

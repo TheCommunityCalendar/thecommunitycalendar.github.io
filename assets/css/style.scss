@@ -351,3 +351,15 @@ label.btn:has(.btn-cb:checked) {
 .pad-left-40 {
   margin-left: 40px !important;
 }
+.pad-btm-40 {
+  margin-bottom: 40px !important;
+}
+#filter_event_visibility + ul {
+  display: none;
+}
+#filter_event_visibility:checked + ul {
+  display: flex;
+}
+#filter_event_visibility:checked {
+  margin-bottom: 40px;
+}

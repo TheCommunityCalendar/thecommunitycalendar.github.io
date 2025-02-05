@@ -1,8 +1,9 @@
 {%- include custom/save_session.html -%}
 <div id="event_anchors_section">
-<input type="checkbox" checked="checked" id="eal_all" onclick="toggleAllIgnore('event_anchor_links')"> 
-<label for="eal_all">Event Visibility Toggle</label>
-<div id="event_anchor_links">Event Listing:
+<!-- <input type="checkbox" checked="checked" id="eal_all" onclick="toggleAllIgnore('event_anchor_links')"> 
+<label for="eal_all">Event Visibility Toggle</label> -->
+<div id="event_anchor_links">
+  <label for="filter_event_visibility" class="btn green">Show Filters:<input type="checkbox" id="filter_event_visibility" class="pad-left-40" />
 <ul>
 {% for item_hash in events %}
   {% assign item = item_hash[1] %}
@@ -10,5 +11,6 @@
     <li><input type="checkbox" checked="checked" id="{{'cb_' | append: slugged }}" onclick="toggleEventIgnore(this.id)"> <a href="#{{'anc_' | append: slugged }}" id="{{'ln_' | append: slugged }}">{{ item.title }}</a></li>
 {% endfor %}
 </ul>
+</label>
 </div>
 </div>
