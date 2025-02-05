@@ -754,3 +754,34 @@ function loadIgnored() {
 //             clsname += " ignored";
 //         }
 // }
+
+function renderShortlistText() {
+    if (SHORTLIST in localStorage) {
+        var my_sittings_str = localStorage.getItem(SHORTLIST);
+        var my_sittings = JSON.parse(my_sittings_str);
+        console.log("Sittings...:");
+        console.log(my_sittings);
+        var output = [];
+        for (let i = 0; i < my_sittings.length; i++) {
+            let s = my_sittings[i];
+            let t = toTitleCase(s.title.replaceAll("-", " "));
+            let dates = JSON.parse(s.dates);
+            for (let j = 0; j < dates.length; j++) {
+                let d = dates[j][0]; // We only care about the start time
+                // let date = d.split("T")[0];
+                let time = d.split("T")[1];
+                // console.log(date);
+                // console.log(time);
+                // console.log(new Date(date));
+
+                let date = new Date(dates[j][0]);
+                let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+                let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+                let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+
+                output.push(`\"${t}\" ( ${day}-${month}-${year} ${time} )`);
+            }
+        }
+        alert(output.join("\n"));
+    }
+}

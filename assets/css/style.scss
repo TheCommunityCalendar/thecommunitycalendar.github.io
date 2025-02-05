@@ -302,14 +302,16 @@ h1:hover .octicon, h2:hover .octicon, h3:hover .octicon, h4:hover .octicon, h5:h
 //   background-color: #eee;
 // }
 
-#dl-cal {
+.btn {
   text-align: center;
-  background-color: #366;
-  color:#fff;
   padding: 20px;
   border-radius: 10px;
   margin: 30px auto;
   display: block;
+}
+.btn.green {
+  background-color: #366;
+  color:#fff;
 }
 
 @media only screen and (max-width: 40em) {

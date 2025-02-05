@@ -3,10 +3,11 @@
 {% else %}
 {% assign cnt = count %}
 {% endif %}
-{% assign group_dates_startend = "" | split: "," %}
+
 {% assign tbl_id = slugged | append: "_" | append: cnt | append: "_" | append: iter %}
 {% if is_group == 1 %}
 <table id="tbl_{{tbl_id}}" class="{{slugged}} event-sitting">
+  {% assign group_dates_startend = "" | split: "," %}
   {% assign group_dates = "" | split: ',' %}
 {% endif %}
 {% for date in content %}
@@ -14,7 +15,7 @@
 {% assign tbl_id = slugged | append: "_" | append: cnt | append: "_" | append: iter %}
 {% if is_group == 0 %}
 <table id="tbl_{{tbl_id}}" class="{{slugged}} event-sitting">
-  
+  {% assign group_dates_startend = "" | split: "," %}
   {% assign group_dates = "" | split: ',' %}
 {% endif %}
     {% assign slugtime = date.time.start | date: "T%H--%M" %}
