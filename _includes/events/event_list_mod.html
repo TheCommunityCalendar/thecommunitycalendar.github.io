@@ -51,7 +51,7 @@
 {% if is_group == 0 %}
 <tr>
   <td colspan="2" id="td_{{ slugged_module }}">
-      <input type="checkbox" data-dates="[{{group_dates_startend | join: ','}}]" data-title="{{ title }}" data-slug="{{slugged}}" data-tbl-id="" name="cb_{{ slugged_module }}_{{group_dates}}" id="cb_{{ slugged_module }}_{{group_dates}}" onclick="toggleEnrolmentPreference(this.id, 'tbl_{{tbl_id}}')">
+      <input type="checkbox" data-location="{{x.address}}" data-desc="{{item.synopsis}}" data-dates="[{{group_dates_startend | join: ','}}]" data-title="{{ title }}" data-slug="{{slugged}}" data-tbl-id="" name="cb_{{ slugged_module }}_{{group_dates}}" id="cb_{{ slugged_module }}_{{group_dates}}" onclick="toggleEnrolmentPreference(this.id, 'tbl_{{tbl_id}}')">
       <label for="cb_{{ slugged_module }}_{{group_dates}}">Shortlist this sitting of this module.</label>
   </td>
 </tr>
@@ -61,7 +61,7 @@
 {% if is_group == 1 %}
 <tr>
   <td colspan="2" id="td_{{ slugged_module }}">
-      <input type="checkbox" data-dates="[{{group_dates_startend | join: ','}}]" data-title="{{ title }}" data-slug="{{slugged}}" name="cb_{{ slugged_module }}_{{group_dates | join: '_'}}" id="cb_{{ slugged_module }}_{{group_dates | join: '_'}}" onclick="toggleEnrolmentPreference(this.id, 'tbl_{{tbl_id}}')">
+      <input type="checkbox" data-location="{{x.address}}" data-desc="{{item.synopsis}}" data-dates="[{{group_dates_startend | join: ','}}]" data-title="{{ title }}" data-slug="{{slugged}}" name="cb_{{ slugged_module }}_{{group_dates | join: '_'}}" id="cb_{{ slugged_module }}_{{group_dates | join: '_'}}" onclick="toggleEnrolmentPreference(this.id, 'tbl_{{tbl_id}}')">
       <label for="cb_{{ slugged_module }}_{{group_dates | join: '_'}}">Shortlist this sitting of this module.</label>
   </td>
 </tr>

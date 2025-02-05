@@ -6,10 +6,17 @@ locations:
     title: "Recovery College"
     icon: "fa-map"
     url: "https://what3words.com/layers.envy.chin"
+    address: |
+      Recovery College, 
+      Lanyon Building, 
+      10 North Derby Street, 
+      Belfast, 
+      BT15 5HL
   teams: 
     title: "Online via Teams"
     icon: "fa-computer"
     url: "ms.teams.url"
+    address: Online via Teams (link will be sent via email)
 contact:
   address: |
     Recovery College, 

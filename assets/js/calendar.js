@@ -60,7 +60,7 @@ function addDatesFrom(title, color, jseventdate) {
 
             span.innerHTML += `<i class="event-count-icon ${clsname}" style="background-color: ${color};" data-color="${color}"></i>`;
             var ul = span.getElementsByTagName("ul")[0];
-            let event_li = `<li class="${clsname}"><a href="#anc_${clsname}">${title} : ${jsonstart} - ${jsonend} @ ${jsonloc}</a></li>`;
+            let event_li = `<li class="${clsname}"><a class="pad-right-40 pad-left-40" href="#anc_${clsname}">${title} : ${jsonstart} - ${jsonend} @ ${LOCATIONS[jsonloc].title}</a></li>`;
             ul.innerHTML += event_li;
         }
     }
@@ -314,7 +314,7 @@ function numberPad(num, targetLength) {
     function toggleSitting(i) {
         
         var cb = document.getElementById(i);
-        var sitting = {id: i, title: cb.getAttribute("data-title"), dates: cb.getAttribute("data-dates").replaceAll("--", ":")};
+        var sitting = {id: i, title: cb.getAttribute("data-title"), dates: cb.getAttribute("data-dates").replaceAll("--", ":"), location: cb.getAttribute("data-location"), desc: cb.getAttribute("data-desc")};
 
         // initCalendarEvent(sitting);
         
@@ -367,9 +367,10 @@ function numberPad(num, targetLength) {
                     cal += "DTSTART:"+dtstart+"\n"
                     cal += "DTEND:"+dtend+"\n";
                     cal += "DTSTAMP:20250204T120000\n";
-                    cal += "UID:" + my_sittings[el].title + dtstart + "@oniccah.com\n";
+                    cal += "UID:" + my_sittings[el].title + dtstart + "@thecommunitycalendar.gitthub.io\n";
                     cal += "CREATED:" + currentDateTime() + "\n";
-                    cal += "DESCRIPTION:Description: " + my_sittings[el].title + "\n"; // synopsis
+                    cal += "LOCATION:"+my_sittings[el].location.replaceAll(/(\n)/gm, "").replaceAll(",", "\\,")+"\n";
+                    cal += "DESCRIPTION:Description: " + my_sittings[el].desc.replace(/(\n)/gm, "") + "\n"; // synopsis
                     cal += "LAST-MODIFIED:20250204T120000\n";
                     cal += "SEQUENCE:0\n";
                     cal += "STATUS:CONFIRMED\n";
