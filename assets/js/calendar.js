@@ -109,8 +109,8 @@ function addDatesFrom(title, color, jseventdate) {
     let jsondate = jseventdate.date.split("-");
     // console.log(jsondate);
     var my_ignored = [];
-    if (IGNORED in window.sessionStorage) {
-        let my_ignored_str = window.sessionStorage.getItem(IGNORED);
+    if (IGNORED in localStorage) {
+        let my_ignored_str = localStorage.getItem(IGNORED);
         my_ignored = JSON.parse(my_ignored_str);
     }
 
@@ -334,22 +334,26 @@ function numberPad(num, targetLength) {
 
 
 loadSession();
-    
+loadIgnored();
+
     function toggleEnrolmentPreference(i, tbl) {
         toggleSitting(i);
         document.getElementById(tbl).classList.toggle("shortlisted");
     }
 
     function loadSession() {
-        if (SHORTLIST in window.sessionStorage) {
-            var my_sittings_str = window.sessionStorage.getItem(SHORTLIST);
+        if (SHORTLIST in localStorage) {
+            var my_sittings_str = localStorage.getItem(SHORTLIST);
             var my_sittings = JSON.parse(my_sittings_str);
 
             for (var el in my_sittings) {
-                // console.log(my_sittings[el]);
+                console.log("Sitting...:");
+                console.log(my_sittings[el]);
                 let cb = document.getElementById(my_sittings[el].id);
                 
                 cb.checked = true;
+
+                getParentOfType(cb, "table").classList.add("shortlisted")
                 // console.log(my_sittings[el].dates);
 
                 
@@ -360,6 +364,16 @@ loadSession();
         }
     }
 
+    function getParentOfType(haystack, needle) {
+        var count = 0;
+        child = haystack;
+        while(child.parentElement.nodeName.toLowerCase() != needle.toLowerCase()) {
+            child = child.parentElement;
+            count++;
+            // console.log(`${child.nodeName} != ${needle}`);
+        }
+        return child.parentElement;
+    }
     function toggleTable(i, t) {
         console.log(t.innerHTML);
         document.getElementById(i).style.display = document.getElementById(i).style.display == "none" ? "table-row-group" : "none";
@@ -509,8 +523,8 @@ loadSession();
 
         // initCalendarEvent(sitting);
         
-        if (SHORTLIST in window.sessionStorage) {
-            var my_sittings_str = window.sessionStorage.getItem(SHORTLIST);
+        if (SHORTLIST in localStorage) {
+            var my_sittings_str = localStorage.getItem(SHORTLIST);
             var my_sittings = JSON.parse(my_sittings_str);
 
             var found = -1;
@@ -527,20 +541,20 @@ loadSession();
                 my_sittings.splice(found,1);
                 removeShortlistItem(sitting);
             }
-            window.sessionStorage.setItem(SHORTLIST, JSON.stringify(my_sittings));
+            localStorage.setItem(SHORTLIST, JSON.stringify(my_sittings));
         } else {
-            window.sessionStorage.setItem(SHORTLIST, JSON.stringify([sitting]));
+            localStorage.setItem(SHORTLIST, JSON.stringify([sitting]));
             addShortlistItem(sitting);
         }
 
-        var my_tmp_sittings_str = window.sessionStorage.getItem(SHORTLIST);
+        var my_tmp_sittings_str = localStorage.getItem(SHORTLIST);
         var my_tmp_sittings = JSON.parse(my_tmp_sittings_str);
         // console.log(JSON.stringify(my_tmp_sittings, null, 2));
-        // // var my_sittings = window.sessionStorage.getItem("sittings");
+        // // var my_sittings = localStorage.getItem("sittings");
         // console.log("XXX");
         // console.log(my_sittings.length);
 
-        // // window.sessionStorage.setItem("sittings", 
+        // // localStorage.setItem("sittings", 
         // if (sessionStorage['sittings'] === null) {
         //     sessionStorage['sittings'] = JSON.stringify(arr);
         //     console.log(JSON.stringify(arr, null, 2));
@@ -571,9 +585,9 @@ loadSession();
         return str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase());
     }
     function downloadCalender() {
-        if (SHORTLIST in window.sessionStorage) {
+        if (SHORTLIST in localStorage) {
             var cal = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//bobbin v0.1//NONSGML iCal Writer//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\n";
-            var my_sittings_str = window.sessionStorage.getItem(SHORTLIST);
+            var my_sittings_str = localStorage.getItem(SHORTLIST);
             var my_sittings = JSON.parse(my_sittings_str);
             // console.log(my_sittings);
             var found = -1;
@@ -674,8 +688,8 @@ function toggleEventIgnore(id) {
 //    targ_ln.classList.add("ignored");
   }
 
-    if (IGNORED in window.sessionStorage) {
-        let my_ignored_str = window.sessionStorage.getItem(IGNORED);
+    if (IGNORED in localStorage) {
+        let my_ignored_str = localStorage.getItem(IGNORED);
         var my_ignored = JSON.parse(my_ignored_str);
 
         var found = -1;
@@ -694,14 +708,28 @@ function toggleEventIgnore(id) {
             my_ignored.splice(found,1); // Found so remove
             // removeShortlistItem(sitting);
         }
-        window.sessionStorage.setItem(IGNORED, JSON.stringify(my_ignored));
+        localStorage.setItem(IGNORED, JSON.stringify(my_ignored));
     } else {
-        window.sessionStorage.setItem(IGNORED, JSON.stringify([clsname]));
+        localStorage.setItem(IGNORED, JSON.stringify([clsname]));
         // addShortlistItem(sitting);
     }
     // console.log(IGNORED);
-    // console.log(window.sessionStorage.getItem(IGNORED));
+    // console.log(localStorage.getItem(IGNORED));
 
+    // let my_ignored_str = localStorage.getItem(IGNORED);
+    // var my_ignored = JSON.parse(my_ignored_str);
+    // for (i in my_ignored) {
+    //     let cl = my_ignored[i];
+    //     // console.log(cl);
+    //     document.getElementById("ln_" + cl).classList.add("ignored");
+    //     document.getElementById("anc_" + cl).classList.add("ignored");
+    //     document.getElementById("cb_" + cl).checked = false;
+    // }
+}
+
+function loadIgnored() {
+    let my_ignored_str = localStorage.getItem(IGNORED);
+    var my_ignored = JSON.parse(my_ignored_str);
     for (i in my_ignored) {
         let cl = my_ignored[i];
         // console.log(cl);
@@ -711,10 +739,9 @@ function toggleEventIgnore(id) {
     }
 }
 
-
 // function ignoreIgnored() {
-//     if (IGNORED in window.sessionStorage) {
-//         let my_ignored_str = window.sessionStorage.getItem(IGNORED);
+//     if (IGNORED in localStorage) {
+//         let my_ignored_str = localStorage.getItem(IGNORED);
 //         let my_ignored = JSON.parse(my_ignored_str);
     
     
