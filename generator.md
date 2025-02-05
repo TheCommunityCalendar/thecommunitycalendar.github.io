@@ -6,9 +6,6 @@ custom_js:
   - generator
 ---
 
-<a href="#new_org">New Organisation</a>
-<a href="#new_event">New Event</a>
-
 <input type="text" id="event_title" /><label for="event_title">Event Title</label><br>
 <input type="text" id="event_location" /><label for="event_location">Event Location</label><br>
 <textarea id="event_desc"></textarea><label for="event_desc">Event Description</label><br>
