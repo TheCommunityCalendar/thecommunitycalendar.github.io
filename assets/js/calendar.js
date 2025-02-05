@@ -483,7 +483,7 @@ function loadIgnored() {
     }
 }
 
-function renderShortlistText() {
+function renderShortlistText(ta) {
     if (SHORTLIST in storageEngine()) {
         var my_sittings_str = getStorage(SHORTLIST);
         var my_sittings = JSON.parse(my_sittings_str);
@@ -506,7 +506,10 @@ function renderShortlistText() {
                 output.push(`\"${t}\" ( ${day}-${month}-${year} ${time} )`);
             }
         }
-        alert(output.join("\n"));
+        // alert(output.join("\n"));
+        document.getElementById(ta).style.display = "block";
+        document.getElementById(ta).innerHTML = output.join("\n");
+        document.getElementById(ta).style.height = document.getElementById(ta).scrollHeight + "px";
     }
 }
 

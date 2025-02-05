@@ -313,6 +313,22 @@ h1:hover .octicon, h2:hover .octicon, h3:hover .octicon, h4:hover .octicon, h5:h
   background-color: #366;
   color:#fff;
 }
+label.btn:has(.btn-cb) {
+  background-color: #933;
+  color:#fff;
+}
+label.btn:has(.btn-cb:checked) {
+  background-color: #366;
+}
+.btn-cb {
+  margin-right: 10px;
+}
+
+#renshortls {
+  width: 100%;
+  display:none;
+  font-size: 1rem;
+}
 
 @media only screen and (max-width: 40em) {
   // thead th:not(:first-child) {

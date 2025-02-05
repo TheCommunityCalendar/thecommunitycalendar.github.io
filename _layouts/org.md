@@ -46,7 +46,8 @@ custom_js:
 <div>
 {% assign events = site.data.orgs[page.org].events %}
 <a href="#dl-cal" onclick="downloadCalender()" id="dl-cal" class="btn green">Download Shortlisted Events Calendar</a></br>
-<a href="#renshortls" onclick="renderShortlistText()" id="renshortls" class="btn green">Get Shortlisted Items as Text</a></br>
+<a href="#renshortls" onclick="renderShortlistText('renshortls')" class="btn green">Get Shortlisted Items as Text</a></br>
+<textarea id="renshortls"></textarea>
 {% include events/event_list_anchors.html events=events %}
 {% include events/event_list.html events=events %}
 </div>
