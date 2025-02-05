@@ -1,3 +1,10 @@
+const SHORTLIST = "shortlistedhaasds"; // SESSION KEY
+const IGNORED = "ignoredhaasds"; // SESSION KEY
+const PREFER_LOCAL = "localOrSessionhaasds"; // SESSION KEY
+
+const KEYS = [SHORTLIST, IGNORED];
+
+
 let date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
@@ -31,8 +38,8 @@ const months = [
 function addDatesFrom(title, color, jseventdate) {
     let jsondate = jseventdate.date.split("-");
     var my_ignored = [];
-    if (IGNORED in localStorage) {
-        let my_ignored_str = localStorage.getItem(IGNORED);
+    if (IGNORED in storageEngine()) {
+        let my_ignored_str = getStorage(IGNORED);
         my_ignored = JSON.parse(my_ignored_str);
     }
 
@@ -91,8 +98,7 @@ function radioMe(i, c, v, l) {
     return `<input class="radio-date ${c}" type="radio" id="${i}" name="date" value="${v}" /><label for="${i}" class="date ${c}">${l}<input class="radio-close-date" type="radio" id="close-${i}" name="date" value="${v}" /><label for="close-${i}" class="close-date">X</label></label>`;
 };
 
-const SHORTLIST = "shortlisted" // SESSION KEY
-const IGNORED = "ignored" // SESSION KEY
+
 
 // Function to generate the calendar
 const manipulate = () => {
@@ -224,8 +230,8 @@ function numberPad(num, targetLength) {
     }
 
     function loadSession() {
-        if (SHORTLIST in localStorage) {
-            var my_sittings_str = localStorage.getItem(SHORTLIST);
+        if (SHORTLIST in storageEngine()) {
+            var my_sittings_str = getStorage(SHORTLIST);
             var my_sittings = JSON.parse(my_sittings_str);
 
             for (var el in my_sittings) {
@@ -312,8 +318,8 @@ function numberPad(num, targetLength) {
 
         // initCalendarEvent(sitting);
         
-        if (SHORTLIST in localStorage) {
-            var my_sittings_str = localStorage.getItem(SHORTLIST);
+        if (SHORTLIST in storageEngine()) {
+            var my_sittings_str = getStorage(SHORTLIST);
             var my_sittings = JSON.parse(my_sittings_str);
 
             var found = -1;
@@ -330,9 +336,9 @@ function numberPad(num, targetLength) {
                 my_sittings.splice(found,1);
                 removeShortlistItem(sitting);
             }
-            localStorage.setItem(SHORTLIST, JSON.stringify(my_sittings));
+            setStorage(SHORTLIST, JSON.stringify(my_sittings));
         } else {
-            localStorage.setItem(SHORTLIST, JSON.stringify([sitting]));
+            setStorage(SHORTLIST, JSON.stringify([sitting]));
             addShortlistItem(sitting);
         }
     }
@@ -344,9 +350,9 @@ function numberPad(num, targetLength) {
     
     
     function downloadCalender() {
-        if (SHORTLIST in localStorage) {
+        if (SHORTLIST in storageEngine()) {
             var cal = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//bobbin v0.1//NONSGML iCal Writer//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\n";
-            var my_sittings_str = localStorage.getItem(SHORTLIST);
+            var my_sittings_str = getStorage(SHORTLIST);
             var my_sittings = JSON.parse(my_sittings_str);
             // console.log(my_sittings);
             var found = -1;
@@ -443,8 +449,8 @@ function toggleEventIgnore(id) {
    targ_ln.classList.add("ignored");
   }
 
-    if (IGNORED in localStorage) {
-        let my_ignored_str = localStorage.getItem(IGNORED);
+    if (IGNORED in storageEngine()) {
+        let my_ignored_str = getStorage(IGNORED);
         var my_ignored = JSON.parse(my_ignored_str);
 
         var found = -1;
@@ -459,14 +465,14 @@ function toggleEventIgnore(id) {
         } else if (checkBox.checked == true && found >= 0){
             my_ignored.splice(found,1); // Found so remove
         }
-        localStorage.setItem(IGNORED, JSON.stringify(my_ignored));
+        setStorage(IGNORED, JSON.stringify(my_ignored));
     } else {
-        localStorage.setItem(IGNORED, JSON.stringify([clsname]));
+        setStorage(IGNORED, JSON.stringify([clsname]));
     }
 }
 
 function loadIgnored() {
-    let my_ignored_str = localStorage.getItem(IGNORED);
+    let my_ignored_str = getStorage(IGNORED);
     var my_ignored = JSON.parse(my_ignored_str);
     for (i in my_ignored) {
         let cl = my_ignored[i];
@@ -478,8 +484,8 @@ function loadIgnored() {
 }
 
 function renderShortlistText() {
-    if (SHORTLIST in localStorage) {
-        var my_sittings_str = localStorage.getItem(SHORTLIST);
+    if (SHORTLIST in storageEngine()) {
+        var my_sittings_str = getStorage(SHORTLIST);
         var my_sittings = JSON.parse(my_sittings_str);
         console.log("Sittings...:");
         console.log(my_sittings);
@@ -504,10 +510,67 @@ function renderShortlistText() {
     }
 }
 
-
-function clearLocalStorage() {
-    localStorage.clear();
+function toggleSessionStorage(cb_id, v=-1) {
+    if (PREFER_LOCAL in localStorage) {
+        // copy localstorage to session and clear
+        for (let k in KEYS) {
+            if (KEYS[k] in localStorage) {
+                window.sessionStorage.setItem(KEYS[k], localStorage.getItem(KEYS[k]));
+            }
+        }
+        localStorage.clear();
+    } else {
+        localStorage.setItem(PREFER_LOCAL, "1");
+        for (let k in KEYS) {
+            if (KEYS[k] in window.sessionStorage) {
+                localStorage.setItem(KEYS[k], window.sessionStorage.getItem(KEYS[k]));
+            }
+        }
+        window.sessionStorage.clear();
+    }
+    document.getElementById(cb_id).checked = storageEngineIsLocal();
 }
+
+function getStorage(key) {
+    if (PREFER_LOCAL in localStorage) {
+        return localStorage.getItem(key);
+    }
+    return window.sessionStorage.getItem(key);
+}
+function setStorage(key, value) {
+    if (PREFER_LOCAL in localStorage) {
+        localStorage.setItem(key, value);
+    }
+    return window.sessionStorage.setItem(key, value);
+}
+function clearCookies() {
+    localStorage.clear();
+    window.sessionStorage.clear();
+}
+function storageEngineIsLocal() {
+    if (PREFER_LOCAL in localStorage) {
+        return true;
+    }
+    return false;
+}
+
+function storageEngine() {
+    if (PREFER_LOCAL in localStorage) {
+        return localStorage;
+    }
+    return window.sessionStorage;
+}
+
+function initStorage() {
+    for( k in KEYS) {
+        storageEngine().setItem(k, "");
+    }
+}
+function initStorageCB() {
+    document.getElementById("cb_storage").checked = storageEngineIsLocal();
+}
+
+initStorageCB();
 manipulate();
 loadSession();
 loadIgnored();
