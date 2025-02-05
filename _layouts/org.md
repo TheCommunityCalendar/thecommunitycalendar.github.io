@@ -6,7 +6,6 @@ custom_js:
   - calendar
 ---
 <script>const LOCATIONS = {{ site.data.orgs[page.org].meta.locations | jsonify }}</script>
-{{ site.data.orgs[page.org].meta.locations | jsonify }}
 <div class="disclaimer">
 <strong>This page is not endorsed, nor affilliated with <em>{{ site.data.orgs[page.org].meta.title | escape }}</em>.</br>Please refer to their resources in case of uncertainty.</br>This site is merely a side-project.</strong>
 </div>
