@@ -672,8 +672,8 @@ function toggleEventIgnore(id) {
         //    console.log(el);
         }
     }
-//    targ_tbl.classList.remove("ignored");
-//    targ_ln.classList.remove("ignored");
+   targ_tbl.classList.remove("ignored");
+   targ_ln.classList.remove("ignored");
   } else {
     // targ_tbl.style.display = "none";
     // targ_ln.style.textDecoration = "line-through";
@@ -684,8 +684,8 @@ function toggleEventIgnore(id) {
         //    console.log(el);
         }
     }
-//    targ_tbl.classList.add("ignored");
-//    targ_ln.classList.add("ignored");
+   targ_tbl.classList.add("ignored");
+   targ_ln.classList.add("ignored");
   }
 
     if (IGNORED in localStorage) {
