@@ -1,0 +1,158 @@
+---
+layout: default
+title: Event Generator
+permalink: /generator/
+custom_js:
+  - generator
+---
+
+<h3>Organisation Generator</h3>
+<table>
+  <tr>
+    <td><label for="meta_title">Organisation Title *</label></td> 
+    <td><input type="text" id="meta_title" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_slug">Organisation Slug</label></td> 
+    <td><input type="text" id="meta_slug" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_desc">Organisation Description</label></td> 
+    <td><textarea id="meta_desc"></textarea></td>
+  </tr>
+  <tr>
+    <td><label for="meta_contact_email">Organisation Email</label></td> 
+    <td><input type="email" id="meta_contact_email" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_contact_tel">Organisation Telephone</label></td> 
+    <td><input type="number" id="meta_contact_tel" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_addr">Organisation Address</label></td> 
+    <td><textarea id="meta_addr"></textarea></td>
+  </tr>
+
+  <tr>
+    <td><label for="meta_links">Organisation Links</label></td> 
+    <td><textarea id="meta_links" readonly></textarea></td>
+  </tr>
+  <tr>
+    <td><label for="meta_locations">Organisation Locations *</label></td> 
+    <td><textarea id="meta_locations" readonly></textarea></td>
+  </tr>
+</table>
+
+<button class="btn green" onclick="generateMeta('meta_', 'title', 'slug', 'desc', 'contact_email', 'contact_tel', 'addr', 'links', 'locations', 'generatorOutputMeta')">Generate</button>
+
+<span>meta.yaml
+<pre id="generatorOutputMeta"></pre>
+</span>
+
+
+<h3>Event Location Generator</h3>
+<table id="meta_new_location">
+  <tr>
+    <td><label for="meta_location_title">Location Title *</label></td> 
+    <td><input type="text" id="meta_location_title" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_slug">Location Slug</label></td> 
+    <td><input type="text" id="meta_location_slug" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_contact_email">Location Email</label></td> 
+    <td><input type="email" id="meta_location_contact_email" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_contact_tel">Location Telephone</label></td> 
+    <td><input type="number" id="meta_location_contact_tel" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_addr">Location Address</label></td> 
+    <td><textarea id="meta_location_addr"></textarea></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_desc">Location Description</label></td> 
+    <td><textarea id="meta_location_desc"></textarea></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_url">Location URL</label></td> 
+    <td><input type="text" id="meta_location_url" /></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_w3w">What 3 Words</label></td> 
+    <td><input type="text" id="meta_location_w3w" placeholder="https://what3words.com/"/></td>
+  </tr>
+  <tr>
+    <td><label for="meta_location_icon">Icon</label></td> 
+    <td><input type="text" id="meta_location_icon" placeholder="fa-map" /></td>
+  </tr>
+</table>
+
+<button class="btn green" onclick="addLocation('meta_location_', 'title', 'slug', 'contact_email', 'contact_tel', 'addr', 'desc', 'url', 'w3w', 'icon', 'generatorOutputMetaLocation')">Add Location</button>
+
+<pre id="generatorOutputMetaLocation"></pre>
+
+<hr>
+
+<h3>Event Generator</h3>
+<table>
+<tr>
+  <td><label for="event_title">Event Title</label></td> 
+  <td><input type="text" id="event_title" /></td>
+</tr>
+<tr>
+  <td><label for="event_location">Event Location</label></td> 
+  <td><select id="event_location"></select></td>
+</tr>
+<tr>
+  <td><label for="event_desc">Event Description</label></td> 
+  <td><textarea id="event_desc"></textarea></td>
+</tr>
+<tr>
+  <td><label for="event_date">Event Date</label></td> 
+  <td><input type="date" id="event_date" /></td>
+</tr>
+<tr>
+  <td><label for="event_start_time">Event Start Time</label></td> 
+  <td><input type="time" id="event_start_time" /></td>
+</tr>
+<tr>
+  <td><label for="event_end_time">Event Finish Time</label></td> 
+  <td><input type="time" id="event_end_time" /></td>
+</tr>
+<tr>
+  <td><label for="event_repeat_every">Repeat every:</label></td> 
+  <td>
+    <select id="event_repeat_every">
+    {% for i in (0..28) %}
+      <option value={{ i }}>{{ i }}</option>
+    {% endfor %}
+    </select>
+    <select id="event_repeat">
+      <option value="none">No Repeat</option>
+      <option value="days">Days</option>
+      <option value="weeks">Weeks</option>
+      <option value="months">Months</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label for="event_repeat_count">Repeat:</label> 
+  </td>
+  <td>
+    <select id="event_repeat_count">
+    {% for i in (0..100) %}
+      <option value={{ i }}>{{ i }} times</option>
+    {% endfor %}
+    </select>
+  </td>
+</tr>
+</table>
+<button class="btn green" onclick="generateEvents('event_', 'title', 'location', 'desc', 'date', 'start_time', 'end_time', 'repeat_every', 'repeat', 'repeat_count', 'generatorOutput')">Generate</button>
+
+<span>/events/::slug::.yaml
+<pre id="generatorOutput"></pre>
+</span>
